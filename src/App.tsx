@@ -1,5 +1,17 @@
+import SideBar from './containers/SideBar'
+import TodoList from './containers/TodoList'
+import EstiloGLobal, { Container } from './styles'
+
 function App() {
-  return <div className="App"></div>
+  return (
+    <>
+      <EstiloGLobal />
+      <Container>
+        <SideBar />
+        <TodoList />
+      </Container>
+    </>
+  )
 }
 
 export default App
