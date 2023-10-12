@@ -31,10 +31,27 @@ import { RootReducer } from '../../store'
 //? ]
 
 const TodoList = () => {
-  //* Usando o useSelector importamos nosso reducer Tarefas,
-  //* além disso desestruturamos para acessar diretamente 'tarefas',
-  //* assim sendo necessário apenas passar o state.
-  const { tarefas } = useSelector((state: RootReducer) => state)
+  //* Usando o useSelector importamos nosso reducers,
+  //* além disso o desestruturamos para acessar a props desejada,
+  //* assim sendo necessário apenas passar o state.(nome do reducer).
+  const { itens } = useSelector((state: RootReducer) => state.tarefas)
+  const { termo } = useSelector((state: RootReducer) => state.filtro)
+
+  //* Essa função tem o objetivo de filtrar os itens então ela procura
+  //* com o search os titulos que contenham o termo, caso não conter o termo
+  //* index -1, ela não será retorna nada
+  const filtraTarefas = () => {
+    //* Acessamos itens e filtramos
+    return itens.filter(
+      //* Agora aplicando o filtro, buscamos os títulos com o search que existam no termo
+      //* se o retorno disso for menor que 0 (-1) significa que não temos esse termo
+      //* então nada será exibido, para tudo funcionar passamos tanto o termo quanto o titulo
+      //* para minusculo com a função toLowerCase, assim irá encontrar o item mesmo
+      //* com diferença entre carácter maiúsculo ou minusculo.
+      (item) => item.titulo.toLowerCase().search(termo.toLowerCase()) >= 0
+    )
+  }
+
   return (
     <Container>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -45,7 +62,7 @@ const TodoList = () => {
         //* devem ser preenchidos, acessamos tarefas, colocamos o .
         //* após isso a propriedade do objeto que deve ser acessada
       */}
-        {tarefas.map((t) => (
+        {filtraTarefas().map((t) => (
           <li key={t.titulo}>
             {/*
             //* Usando o Key para o react identificar quais elementos sofreram uma mudança
@@ -54,10 +71,11 @@ const TodoList = () => {
             //* no caso do exemplo será o titulo da tarefa.
           */}
             <Tarefa
+              id={t.id}
               titulo={t.titulo}
-              descricao={t.descricao}
               prioridade={t.prioridade}
               status={t.status}
+              descricao={t.descricao}
             />
           </li>
         ))}

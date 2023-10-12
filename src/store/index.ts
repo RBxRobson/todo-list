@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import tarefasReducer from './reducers/tarefas'
+import filtroReducer from './reducers/filtro'
 //* Criando nossa store para fazer uso do redux *\\
 const store = configureStore({
   reducer: {
     //* Deletar tarefas *\\
-    tarefas: tarefasReducer
+    tarefas: tarefasReducer,
+    //* Filtrar tarefas *\\
+    filtro: filtroReducer
   }
 })
 
