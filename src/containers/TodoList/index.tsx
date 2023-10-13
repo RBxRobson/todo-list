@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux'
 import Tarefa from '../../components/Tarefa'
 import { Container } from './style'
 
-//* Importando enums *\\
-import * as enums from '../../utils/enums/Tarefa'
 import { RootReducer } from '../../store'
 
 //! Esse conteúdo está sendo preenchido via construtor !\\
@@ -35,26 +33,55 @@ const TodoList = () => {
   //* além disso o desestruturamos para acessar a props desejada,
   //* assim sendo necessário apenas passar o state.(nome do reducer).
   const { itens } = useSelector((state: RootReducer) => state.tarefas)
-  const { termo } = useSelector((state: RootReducer) => state.filtro)
+  const { termo, criterio, valor } = useSelector(
+    (state: RootReducer) => state.filtro
+  )
 
   //* Essa função tem o objetivo de filtrar os itens então ela procura
   //* com o search os titulos que contenham o termo, caso não conter o termo
   //* index -1, ela não será retorna nada
   const filtraTarefas = () => {
-    //* Acessamos itens e filtramos
-    return itens.filter(
-      //* Agora aplicando o filtro, buscamos os títulos com o search que existam no termo
-      //* se o retorno disso for menor que 0 (-1) significa que não temos esse termo
-      //* então nada será exibido, para tudo funcionar passamos tanto o termo quanto o titulo
-      //* para minusculo com a função toLowerCase, assim irá encontrar o item mesmo
-      //* com diferença entre carácter maiúsculo ou minusculo.
-      (item) => item.titulo.toLowerCase().search(termo.toLowerCase()) >= 0
-    )
+    let tarefasFiltradas = itens
+    if (termo !== undefined) {
+      //* Se termo não for undefined acessamos tarefasFiltradas e filtramos
+      tarefasFiltradas = tarefasFiltradas.filter(
+        //* Agora aplicando o filtro, buscamos os títulos com o search que existam no termo
+        //* se o retorno disso for menor que 0 (-1) significa que não temos esse termo
+        //* então nada será exibido, para tudo funcionar passamos tanto o termo quanto o titulo
+        //* para minusculo com a função toLowerCase, assim irá encontrar o item mesmo
+        //* com diferença entre carácter maiúsculo ou minusculo.
+        (item) => item.titulo.toLowerCase().search(termo.toLowerCase()) >= 0
+      )
+      //* Caso criterio for prioridade, então vamos retornar as tarefas
+      //* com prioridade === a valor
+      if (criterio === 'prioridade') {
+        tarefasFiltradas = tarefasFiltradas.filter(
+          (item) => item.prioridade === valor
+        )
+        //* Caso criterio for status, então vamos retornar as tarefas
+        //* com status === a valor
+      } else if (criterio === 'status') {
+        tarefasFiltradas = tarefasFiltradas.filter(
+          (item) => item.status === valor
+        )
+      }
+      //* Agora basta retornar nosso array filtrado
+      return tarefasFiltradas
+
+      //* Caso termo for undefined iremos retornar todos os itens *\\
+    } else {
+      return itens
+    }
   }
 
   return (
     <Container>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <ul>
+        <li>{termo}</li>
+        <li>{criterio}</li>
+        <li>{valor}</li>
+      </ul>
       <ul>
         {/*
         //* Percorrendo os itens do nosso array de objetos com o map, após isso acessamos
