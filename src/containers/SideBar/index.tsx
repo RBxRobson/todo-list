@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux'
-import FiltroCard from '../../components/FiltroCard'
 
-import * as S from './style'
+import FiltroCard from '../../components/FiltroCard'
 import { RootReducer } from '../../store'
 import { alteraTermo } from '../../store/reducers/filtro'
 
+import * as S from './style'
+import * as enums from '../../utils/enums/Tarefa'
+
 const SideBar = () => {
-  //* PRecisamos do dispatch para invocar uma função que altera o estado *\\
+  //* Precisamos do dispatch para invocar uma função que altera o estado *\\
   const dispatch = useDispatch()
   const { termo } = useSelector((state: RootReducer) => state.filtro)
 
@@ -22,12 +24,33 @@ const SideBar = () => {
           onChange={(evento) => dispatch(alteraTermo(evento.target.value))}
         />
         <S.Filtros>
-          <FiltroCard legenda="pendentes" contador={2} />
-          <FiltroCard legenda="concluidas" contador={3} />
-          <FiltroCard legenda="urgentes" contador={4} />
-          <FiltroCard legenda="importantes" contador={1} />
-          <FiltroCard legenda="normal" contador={3} />
-          <FiltroCard legenda="todas" contador={5} />
+          {/* //* Cada card dos filtros tem seus valores, passamos eles com props */}
+          <FiltroCard
+            valor={enums.Status.PENDENTE}
+            criterio="status"
+            legenda="pendentes"
+          />
+          <FiltroCard
+            valor={enums.Status.CONCLUIDA}
+            criterio="status"
+            legenda="concluidas"
+          />
+          <FiltroCard
+            valor={enums.Prioridade.URGENTE}
+            criterio="prioridade"
+            legenda="urgentes"
+          />
+          <FiltroCard
+            valor={enums.Prioridade.IMPORTANTE}
+            criterio="prioridade"
+            legenda="importantes"
+          />
+          <FiltroCard
+            valor={enums.Prioridade.NORMAL}
+            criterio="prioridade"
+            legenda="normal"
+          />
+          <FiltroCard criterio="todas" legenda="todas" />
         </S.Filtros>
       </div>
     </S.Aside>
