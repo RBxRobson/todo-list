@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 
 import Tarefa from '../../components/Tarefa'
-import { Container } from './style'
+import { Container, Resultado } from './style'
 
 import { RootReducer } from '../../store'
 
@@ -73,15 +73,35 @@ const TodoList = () => {
       return itens
     }
   }
+  const tarefas = filtraTarefas()
+
+  //* Criando a função que irá exibir o resultado da filtragem
+  //* ela recebe a quantidade de tarefas como argumento
+  const exibeResultadoFiltrado = (quantidade: number) => {
+    //* A variável mensagem irá receber nossas templates string
+    let mensagem = ''
+    //* A const complemento recebe a validação do termo, ele deve ser diferente de undefined
+    //* e maior que zero, pois o filtro todas retorna undefined e uma pesquisa errada retorna -1,
+    //* caso atender esses fatores exibimos nosso o termo,
+    //* no contrário ele será omitido por uma string vazia
+    const complemento =
+      termo !== undefined && termo.length > 0 ? `e "${termo}"` : ''
+
+    //* Caso criterio for todas, iremos implementar a mensagem essa templete string
+    if (criterio === 'todas') {
+      mensagem = `${quantidade} tarefa(s) encontradas como: todas ${complemento}`
+      //* Caso o criterio for outra opção iremos implementar a mensagem essa templete string
+    } else {
+      mensagem = `${quantidade} tarefa(s) encontradas como: "${`${criterio} = ${valor}`}" ${complemento}`
+    }
+
+    return mensagem
+  }
+  const mensagem = exibeResultadoFiltrado(tarefas.length)
 
   return (
     <Container>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <ul>
-        <li>{termo}</li>
-        <li>{criterio}</li>
-        <li>{valor}</li>
-      </ul>
+      <Resultado>{mensagem}</Resultado>
       <ul>
         {/*
         //* Percorrendo os itens do nosso array de objetos com o map, após isso acessamos
@@ -89,7 +109,7 @@ const TodoList = () => {
         //* devem ser preenchidos, acessamos tarefas, colocamos o .
         //* após isso a propriedade do objeto que deve ser acessada
       */}
-        {filtraTarefas().map((t) => (
+        {tarefas.map((t) => (
           <li key={t.titulo}>
             {/*
             //* Usando o Key para o react identificar quais elementos sofreram uma mudança
