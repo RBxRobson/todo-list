@@ -1,9 +1,27 @@
 import { Provider } from 'react-redux'
-import SideBar from './containers/SideBar'
-import TodoList from './containers/TodoList'
+//* Importando os arquivos do react router DOM *\\
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+//* Com o creteBrowserRouter conseguimos configurar as paginas e todo roteamento da aplicação *\\
+//* Já o RouterProvider é o componente que irá gerenciar tudo *\\
+
 import EstiloGLobal, { Container } from './styles'
 
 import store from './store'
+import Home from './pages/Home'
+import Cadastro from './pages/Cadastro'
+
+const rotas = createBrowserRouter([
+  {
+    //* Caminho inicial *\\
+    path: '/',
+    //* Elemento a ser renderizado *\\
+    element: <Home />
+  },
+  {
+    path: '/cadastro',
+    element: <Cadastro />
+  }
+])
 
 function App() {
   return (
@@ -12,8 +30,9 @@ function App() {
     <Provider store={store}>
       <EstiloGLobal />
       <Container>
-        <SideBar />
-        <TodoList />
+        {/* //* Chamando nosso componente que contém nossas rotas
+         */}
+        <RouterProvider router={rotas} />
       </Container>
     </Provider>
   )
