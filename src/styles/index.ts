@@ -1,6 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import variaveis from './variaveis'
-import { Button } from '../components/Tarefa/style'
 
 const EstiloGLobal = createGlobalStyle`
   *{
@@ -38,6 +37,18 @@ export const Campo = styled.input`
   color: #666666;
   border: 2px solid #666666;
   width: 100%;
+`
+//* Criando os botões da nossa barra de ações *\\
+export const Button = styled.button`
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #2f3640;
+  border-radius: 8px;
+  margin-right: 8px;
 `
 
 export const SaveBtn = styled(Button)`

@@ -6,7 +6,6 @@ import { MainContainer, SaveBtn, Titulo } from '../../styles'
 import { Campo } from '../../styles'
 import { Form, Opcoes, Opcao } from './style'
 import * as enums from '../../utils/enums/Tarefa'
-import Tarefa from '../../models/Tarefa'
 import { cadastrar } from '../../store/reducers/tarefas'
 
 const Formulario = () => {
@@ -23,19 +22,18 @@ const Formulario = () => {
   const cadastrarTarefa = (evento: FormEvent) => {
     //* desativando o evento de recarregar a pagina *\\
     evento.preventDefault()
-    //* Aqui passamos as propriedades necessária para a criação da nossa tarefa *\\
-    const tarefaParaAdicionar = new Tarefa(
-      9,
-      titulo,
-      prioridade,
-      enums.Status.PENDENTE,
-      descricao
-    )
 
     //* Usamos o dispatch para chamar nossa action cadastrar, que irá verificar se existe um titulo
     //* já cadastrado igual ao passado no input, se houver emite um alerta, caso contrário fará
     //* um push, com as informações contidas na nova tarefa criada dentro da const tarefaParaAdicionar
-    dispatch(cadastrar(tarefaParaAdicionar))
+    dispatch(
+      cadastrar({
+        titulo,
+        prioridade,
+        status: enums.Status.PENDENTE,
+        descricao
+      })
+    )
     navigate('/')
   }
 

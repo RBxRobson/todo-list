@@ -4,7 +4,7 @@ import SideBar from '../../containers/SideBar'
 const Cadastro = () => {
   return (
     <>
-      <SideBar />
+      <SideBar mostrarFiltros={false} />
       <Formulario />
     </>
   )

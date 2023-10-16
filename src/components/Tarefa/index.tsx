@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import * as S from './style'
 
 //* Importando enums *\\
 import * as enums from '../../utils/enums/Tarefa'
 
-import { remove, save } from '../../store/reducers/tarefas'
+import { alteraStatus, remove, save } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/Tarefa'
-import { SaveBtn } from '../../styles'
+import { Button, SaveBtn } from '../../styles'
 
 //* Criando nossa Props e sua tipagem, como ja temos a tipagem
 //* na nossa classe com o construtor reutilizamos essa tipagem*\\
@@ -49,10 +49,31 @@ const Tarefa = ({
     setDescricao(descricaoOriginal)
   }
 
+  function alteraStatusTarefa(evento: ChangeEvent<HTMLInputElement>) {
+    dispatch(
+      alteraStatus({
+        id,
+        finalizado: evento.target.checked
+      })
+    )
+  }
+
   return (
     <S.Card>
       {/* //* Passando nossas props para os elementos de texto  */}
-      <S.Title>{titulo}</S.Title>
+      <label htmlFor={titulo}>
+        <input
+          type="checkbox"
+          id={titulo}
+          checked={status === enums.Status.CONCLUIDA}
+          onChange={alteraStatusTarefa}
+        />
+        <S.Title>
+          {/* //* Se está editando for true exibimos a mensagem abaixo */}
+          {estaEditando && <em>Editando: </em>}
+          {titulo}
+        </S.Title>
+      </label>
       <S.Tag parametro="prioridade" prioridade={prioridade}>
         {prioridade}
       </S.Tag>
@@ -89,7 +110,7 @@ const Tarefa = ({
         ) : (
           <>
             {/* //* onClick passando o setEstaEditando para alterar o estaEditando para true */}
-            <S.Button onClick={() => setEstaEditando(true)}>Editar</S.Button>
+            <Button onClick={() => setEstaEditando(true)}>Editar</Button>
             {/* //* O remove irá remover a tarefa de acordo com o id da mesma */}
             <S.DeleteBtn onClick={() => dispatch(remove(id))}>
               Remover
