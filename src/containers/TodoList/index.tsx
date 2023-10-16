@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 
 import Tarefa from '../../components/Tarefa'
-import { Container, Resultado } from './style'
+import { MainContainer, Titulo } from '../../styles/index'
 
 import { RootReducer } from '../../store'
 
@@ -100,8 +100,8 @@ const TodoList = () => {
   const mensagem = exibeResultadoFiltrado(tarefas.length)
 
   return (
-    <Container>
-      <Resultado>{mensagem}</Resultado>
+    <MainContainer>
+      <Titulo as="p">{mensagem}</Titulo>
       <ul>
         {/*
         //* Percorrendo os itens do nosso array de objetos com o map, após isso acessamos
@@ -127,7 +127,7 @@ const TodoList = () => {
           </li>
         ))}
       </ul>
-    </Container>
+    </MainContainer>
   )
 }
 

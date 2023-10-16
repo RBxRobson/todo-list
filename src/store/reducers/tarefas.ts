@@ -55,10 +55,30 @@ const tarefasSlice = createSlice({
       if (indexTarefa >= 0) {
         state.itens[indexTarefa] = action.payload
       }
+    },
+    //* Criando a action que cadastra novas tarefas *\\
+    cadastrar: (state, action: PayloadAction<Tarefa>) => {
+      //* Criando uma const que irá acessar nosso estado e pegar o primeiro item que
+      //* atender os parâmetros exigidos.
+      const tarefaExiste = state.itens.find(
+        (tarefa) =>
+          //* Se existir uma tarefa no nosso array que tenha o mesmo titulo
+          //* da tarefa passada como argumento (action.payload) teremos o retorno de true
+          //* caso não existir nosso retorno será false
+          tarefa.titulo.toLowerCase() === action.payload.titulo.toLowerCase()
+      )
+
+      //* Se for true o nosso retorno iremos emitir esse alerta
+      if (tarefaExiste) {
+        alert('Já existe uma tarefa com esse nome')
+        //* Caso for false, iremos adicionar a tarefa passada via push
+      } else {
+        state.itens.push(action.payload)
+      }
     }
   }
 })
 
 //* Agora com o reducer pronto só falta exporta-lo juntamente com action remove *\\
-export const { remove, save } = tarefasSlice.actions
+export const { remove, save, cadastrar } = tarefasSlice.actions
 export default tarefasSlice.reducer

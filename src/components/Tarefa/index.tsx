@@ -7,6 +7,7 @@ import * as enums from '../../utils/enums/Tarefa'
 
 import { remove, save } from '../../store/reducers/tarefas'
 import TarefaClass from '../../models/Tarefa'
+import { SaveBtn } from '../../styles'
 
 //* Criando nossa Props e sua tipagem, como ja temos a tipagem
 //* na nossa classe com o construtor reutilizamos essa tipagem*\\
@@ -71,7 +72,7 @@ const Tarefa = ({
         //* Editar e Remover */}
         {estaEditando ? (
           <>
-            <S.SaveBtn
+            <SaveBtn
               onClick={() => {
                 {
                   //* O Save irá salvar a tarefa de acordo com o id da mesma
@@ -82,7 +83,7 @@ const Tarefa = ({
               }}
             >
               Salvar
-            </S.SaveBtn>
+            </SaveBtn>
             <S.DeleteBtn onClick={() => cancelarEdicao}>Cancelar</S.DeleteBtn>
           </>
         ) : (

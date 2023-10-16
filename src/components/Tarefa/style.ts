@@ -115,9 +115,6 @@ export const Button = styled.button`
 //* ou seja, desse modo conseguimos herdar os estilos aplicados no elemento pai
 //* facilitando na hora de usar modificadores, para fazer isso basta chamar o styled como
 //* função e colocar como argumento o elemento que terá seus estilos herdados.
-export const SaveBtn = styled(Button)`
-  background-color: ${variaveis.verde};
-`
 
 export const DeleteBtn = styled(Button)`
   background-color: ${variaveis.vermelho};

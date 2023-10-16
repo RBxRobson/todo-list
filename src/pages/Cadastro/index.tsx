@@ -1,8 +1,12 @@
+import Formulario from '../../containers/Formulario'
+import SideBar from '../../containers/SideBar'
+
 const Cadastro = () => {
   return (
-    <div>
-      <h1>jidkfhd</h1>
-    </div>
+    <>
+      <SideBar />
+      <Formulario />
+    </>
   )
 }
 

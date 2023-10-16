@@ -6,6 +6,7 @@ import { alteraTermo } from '../../store/reducers/filtro'
 
 import * as S from './style'
 import * as enums from '../../utils/enums/Tarefa'
+import { Campo } from '../../styles'
 
 const SideBar = () => {
   //* Precisamos do dispatch para invocar uma função que altera o estado *\\
@@ -15,7 +16,7 @@ const SideBar = () => {
   return (
     <S.Aside>
       <div>
-        <S.Campo
+        <Campo
           type="text"
           placeholder="Buscar"
           //* Passamos o termo como valor do campo *\\
